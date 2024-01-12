@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import Menu from "./components/Menu";
 
@@ -55,11 +55,11 @@ function App() {
   };
 
   return (
-    <div className="container mx-auto max-w-[1200px]">
-      <header className="flex justify-center items-center font-semibold bg-gray-200 p-3">
+    <main className="container mx-auto max-w-[1200px] bg-gray-200 p-1">
+      <header className="flex justify-center items-center font-semibold  p-3">
         <div>Testing Functionality for Tree and Datagrid</div>
       </header>
-      <main className="grid grid-cols-5 bg-black/40 p-2">
+      <section className="grid grid-cols-5 bg-black/40 p-2 border border-black rounded-sm">
         <div className="col-span-2">
           <div className="w-full flex bg-white p-2 h-[300px] overflow-scroll rounded-sm">
             <Menu items={tree} onNodeClick={handleNodeClick} />
@@ -74,9 +74,76 @@ function App() {
             Current Part:{" "}
             <span className="uppercase">{currentPart || "None"}</span>
           </div>
+          <div className="mt-4">
+            <button className="bg-transparent shadow-md font-semibold hover:bg-gray-500 duration-300 transition-colors hover:text-white py-2 px-4 border border-gray-500 rounded">
+              Populate Data in Tree
+            </button>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+      <section className="mt-2 bg-black/40 p-2 border border-black rounded-sm">
+        <div className="flex-grow overflow-auto">
+          <table className="min-w-full mx-auto table-auto">
+            <thead className="bg-black justify-between text-white text-center">
+              <tr>
+                <th>PARENT_NAME</th>
+                <th>COMPONENT_NAME</th>
+                <th>PART_NUMBER</th>
+                <th>TITLE</th>
+                <th>QUANTITY</th>
+                <th>TYPE</th>
+                <th>ITEM</th>
+                <th>MATERIAL</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              <tr>
+                <td className="border border-black p-2">ORIFICE</td>
+                <td className="border border-black p-2">OPLT_PTAB_STRIP</td>
+                <td className="border border-black p-2">03200-0309</td>
+                <td className="border border-black p-2">
+                  *PUNCHTAB SPACING STRIP
+                </td>
+                <td className="border border-black p-2">1</td>
+                <td className="border border-black p-2">PART</td>
+                <td className="border border-black p-2">B5</td>
+                <td className="border border-black p-2">
+                  K4.0.60 X 84-3/8 LG",SA-240-410S
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-black p-2">ORIFICE</td>
+                <td className="border border-black p-2">OPLT_PTAB_STRIP</td>
+                <td className="border border-black p-2">03200-0309</td>
+                <td className="border border-black p-2">
+                  *PUNCHTAB SPACING STRIP
+                </td>
+                <td className="border border-black p-2">1</td>
+                <td className="border border-black p-2">PART</td>
+                <td className="border border-black p-2">B5</td>
+                <td className="border border-black p-2">
+                  K4.0.60 X 84-3/8 LG",SA-240-410S
+                </td>
+              </tr>
+              <tr>
+                <td className="border border-black p-2">ORIFICE</td>
+                <td className="border border-black p-2">OPLT_PTAB_STRIP</td>
+                <td className="border border-black p-2">03200-0309</td>
+                <td className="border border-black p-2">
+                  *PUNCHTAB SPACING STRIP
+                </td>
+                <td className="border border-black p-2">1</td>
+                <td className="border border-black p-2">PART</td>
+                <td className="border border-black p-2">B5</td>
+                <td className="border border-black p-2">
+                  K4.0.60 X 84-3/8 LG",SA-240-410S
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
   );
 }
 
