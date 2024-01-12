@@ -1,10 +1,10 @@
 import MenuItem from "./MenuItem";
 
-const Menu = ({ items }) => {
+const Menu = ({ items, onNodeClick }) => {
   return (
     <div className="wrapper">
       {items.children.map((item) => (
-        <MenuItem item={item} />
+        <MenuItem key={item.name} item={item} onNodeClick={onNodeClick} />
       ))}
     </div>
   );
