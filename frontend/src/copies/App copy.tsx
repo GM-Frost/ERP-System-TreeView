@@ -4,11 +4,6 @@ import Menu from "./components/Menu";
 
 const tree = {
   children: [
-    { name: "empty_folder", subfolder: [] },
-    {
-      name: "public",
-      children: [{ name: "index.html" }, { name: "favicon.ico" }],
-    },
     {
       name: "src",
       children: [
@@ -21,36 +16,38 @@ const tree = {
       ],
     },
     {
+      name: "valve",
+      children: [
+        { name: "Body", children: [] },
+        { name: "Orifice_gasket", children: [] },
+        {
+          name: "Orifice",
+          children: [
+            { name: "Orifice_PL", children: [] },
+            { name: "OPLT_RETAINER_BOT", children: [] },
+            { name: "OPLT_REFY", children: [] },
+            { name: "ORIFICE_PTAB", children: [] },
+          ],
+        },
+      ],
+    },
+    {
       name: "package.json",
     },
   ],
 };
 
 function App() {
-  const [parentChildPart, setParentChildPart] = useState(null);
-  const [currentPart, setCurrentPart] = useState(null);
+  const [parentPart, setParentPart] = useState("");
+  const [childPart, setChildPart] = useState("");
 
-  const handleNodeClick = (name, isFolder) => {
-    if (isFolder) {
-      setParentChildPart(name);
-      setCurrentPart(null);
+  const handleItemSelected = (path: string) => {
+    if (!parentPart) {
+      // Set the parentPart when it's empty
+      setParentPart(path);
     } else {
-      const findParent = (node, targetName) => {
-        if (node.children) {
-          for (const child of node.children) {
-            if (child.name === targetName) {
-              setParentChildPart(node.name);
-              break;
-            }
-            if (child.children) {
-              findParent(child, targetName);
-            }
-          }
-        }
-      };
-
-      findParent(tree, name);
-      setCurrentPart(name);
+      // Update the childPart by appending the selected path
+      setChildPart(`${parentPart}\\${path}`);
     }
   };
 
@@ -62,17 +59,17 @@ function App() {
       <section className="grid grid-cols-5 bg-black/40 p-2 border border-black rounded-sm">
         <div className="col-span-2">
           <div className="w-full flex bg-white p-2 h-[300px] overflow-scroll rounded-sm">
-            <Menu items={tree} onNodeClick={handleNodeClick} />
+            <Menu items={tree} onItemSelected={handleItemSelected} />
           </div>
         </div>
         <div className="col-span-3 justify-center items-center flex flex-col">
           <div className="text-red-600 text-lg">
             Parent Child Part:{" "}
-            <span className="uppercase">{parentChildPart || "None"}</span>
+            <span className="uppercase">{parentPart || "None"}</span>
           </div>
           <div className="text-green-700 text-lg">
             Current Part:{" "}
-            <span className="uppercase">{currentPart || "None"}</span>
+            <span className="uppercase">{childPart || "None"}</span>
           </div>
           <div className="mt-4">
             <button className="bg-transparent shadow-md font-semibold hover:bg-gray-500 duration-300 transition-colors hover:text-white py-2 px-4 border border-gray-500 rounded">

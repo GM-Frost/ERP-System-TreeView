@@ -1,19 +1,21 @@
 import { useState } from "react";
 
-const MenuItem = ({ item, onNodeClick }) => {
+interface MenuItemProps {
+  item: any;
+  onItemSelected: (path: string) => void;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({ item, onItemSelected }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = () => {
-    if (item.children) {
-      setIsOpen(!isOpen);
-    } else {
-      onNodeClick(item.name);
-    }
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+    onItemSelected(item.name);
   };
 
   return (
     <div>
-      <button className="menu-item" onClick={handleClick}>
+      <button className="menu-item" onClick={toggleOpen}>
         {item.children && (isOpen ? "▼" : "▶")}
         {item.name}
       </button>
@@ -25,7 +27,7 @@ const MenuItem = ({ item, onNodeClick }) => {
                 <MenuItem
                   key={subitem.name}
                   item={subitem}
-                  onNodeClick={onNodeClick}
+                  onItemSelected={onItemSelected}
                 />
               ))
             : "-- Empty --"}
