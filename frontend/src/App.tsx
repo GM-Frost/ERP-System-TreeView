@@ -33,7 +33,7 @@ const Folder: React.FC<{ folder: File }> = ({ folder }) => {
   return (
     <div>
       <div onClick={toggleFolder} style={{ cursor: "pointer" }}>
-        {folder.TYPE === "FOLDER" ? "- " : ""}
+        {folder.TYPE === "FOLDER" ? "📂 " : ""}
         {folder.PARENT_NAME}
       </div>
       {isOpen && folder.children && (
@@ -59,7 +59,8 @@ const App: React.FC = () => {
   const [selectedChild, setSelectedChild] = useState<string>("");
   const [tableApiData, setTableApiData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [message, setMessage] = useState<string>("");
+  const [dataBaseStatus, setDataBaseStatus] = useState<boolean>(false);
   const [isDataPopulated, setIsDataPopulated] = useState<boolean>(false);
 
   const handleItemClick = (parent: string, child: string) => {
@@ -75,7 +76,7 @@ const App: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:57002/api/bom${parentPath}`
+        `${import.meta.env.VITE_COREAPI_URL}/api/bom${parentPath}`
       );
       const data = await response.json();
       setTableApiData(data);
@@ -91,10 +92,13 @@ const App: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setMessage("Fetching Menu...");
         const data = await fetchMenuData();
         setMenuData(data);
+        setDataBaseStatus(true);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setMessage("Error fetching data");
       } finally {
         setLoading(false);
       }
@@ -104,7 +108,13 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <main className="container mx-auto max-w-[1200px] bg-gray-200 p-1">
+    <main className="container mx-auto max-w-[1200px]  bg-gray-200 p-1">
+      <div className="flex justify-between text-xs">
+        <span className="">
+          Database Status: {dataBaseStatus ? "🟢" : "🔴"}
+        </span>
+        <span className="">Developed by: Nayan Bastola</span>
+      </div>
       <header className="flex justify-center items-center font-semibold  p-3">
         <div>Testing Functionality for Tree and Datagrid</div>
       </header>
@@ -112,7 +122,7 @@ const App: React.FC = () => {
         <div className="col-span-2">
           <div className="w-full flex bg-white p-2 h-[300px] overflow-scroll rounded-sm">
             {loading && menuData.length === 0 ? (
-              <div className="text-center text-2xl">Fetching Menu...</div>
+              <div className="text-center text-2xl">{message}</div>
             ) : (
               <FolderFileStructure
                 menuData={menuData}
