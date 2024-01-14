@@ -34,7 +34,7 @@ const FolderFileStructure: React.FC<FolderFileStructureProps> = ({
           className="cursor-pointer"
           onClick={() => toggleItem(item.PARENT_NAME)}
         >
-          {isItemExpanded(item.PARENT_NAME) ? "-" : "+"} {item.PARENT_NAME}
+          {isItemExpanded(item.PARENT_NAME) ? "📂" : "📁"} {item.PARENT_NAME}
         </div>
         {item.Children && expandedItems.includes(item.PARENT_NAME) && (
           <div className="pl-4">
@@ -50,7 +50,7 @@ const FolderFileStructure: React.FC<FolderFileStructureProps> = ({
                       )
                     }
                   >
-                    {child.COMPONENT_NAME}
+                    - {child.COMPONENT_NAME}
                   </div>
                 ) : null}
                 {child.Children &&

@@ -91,6 +91,49 @@ namespace ERPSystem.Controllers
 
             return lookup.Values.ToList();
         }
+
+
+        [HttpGet("{parentName}")]
+        public JsonResult GetBomDataByParentName(string parentName)
+        {
+            string query = @"
+                SELECT 
+                    PARENT_NAME,
+                    B.COMPONENT_NAME,
+                    IFNULL(P.PART_NUMBER, '') AS PART_NUMBER,
+                    IFNULL(P.TITLE, '') AS TITLE,
+                    B.QUANTITY,
+                    IFNULL(P.TYPE, '') AS TYPE,
+                    IFNULL(P.ITEM, '') AS ITEM,
+                    IFNULL(P.MATERIAL, '') AS MATERIAL
+                FROM 
+                    erpsystem.bom B
+                LEFT JOIN 
+                    erpsystem.parts P ON B.COMPONENT_NAME = P.NAME
+                WHERE
+                     B.PARENT_NAME = @ParentName;";
+
+            DataTable table = new DataTable();
+
+            //dependency injection
+            string sqlDataSource = _configuration.GetConnectionString("ERPSysConn");
+            MySqlDataReader myReader;
+
+            using (MySqlConnection myConn = new MySqlConnection(sqlDataSource))
+            {
+                myConn.Open();
+                using (MySqlCommand myCommand = new MySqlCommand(query, myConn))
+                {
+                    myCommand.Parameters.AddWithValue("@ParentName", parentName);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myConn.Close();
+                }
+            }
+
+            return new JsonResult(table);
+        }
     }
 }
 
