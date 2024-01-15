@@ -1,6 +1,3 @@
-// Author: Nayan Bastola - 2024 @ www.nayanbastola.com
-// Description: ERP System for QBuild
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

@@ -1,6 +1,3 @@
-// Author: Nayan Bastola - 2024 @ www.nayanbastola.com
-// Description: ERP System for QBuild
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Serialization;
-using MySql.Data.MySqlClient;
 
 namespace ERPSystem
 {
@@ -36,8 +33,8 @@ namespace ERPSystem
             });
 
             // JSON Serializer
-            services.AddControllersWithViews().AddNewtonsoftJson(options=>
-            options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(options=> options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             // Database connection setup
             string connectionString = Configuration.GetConnectionString("ERPSysConn");
@@ -48,21 +45,16 @@ namespace ERPSystem
                 {
                     connection.Open();
                     Console.WriteLine("Connection to the database is successful!");
-
-                    // Perform any additional database setup here
-
                 }
 
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Connection to the database failed: {ex.Message}");
-                    // Handle the exception or log it appropriately
+                 
                 }
             }
 
             services.AddControllers();
-
-         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

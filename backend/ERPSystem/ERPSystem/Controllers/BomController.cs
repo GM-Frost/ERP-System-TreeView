@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Data;
-using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using ERPSystem.Models;
+using System.Data;
 
 namespace ERPSystem.Controllers
 {
@@ -15,13 +15,14 @@ namespace ERPSystem.Controllers
     [ApiController]
     public class BomController : ControllerBase
     {
+        //dependency injection
         private readonly IConfiguration _configuration;
 
         public BomController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
+        //getting data
         [HttpGet]
         public JsonResult Get()
         {
@@ -52,7 +53,6 @@ namespace ERPSystem.Controllers
 
             return new JsonResult(hierarchicalBom);
         }
-
         private List<Bom> ConvertDataTableToBomList(DataTable table)
         {
             List<Bom> bomList = new List<Bom>();
@@ -136,4 +136,3 @@ namespace ERPSystem.Controllers
         }
     }
 }
-

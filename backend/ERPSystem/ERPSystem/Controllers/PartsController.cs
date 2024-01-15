@@ -14,9 +14,8 @@ namespace ERPSystem.Controllers
     [ApiController]
     public class PartsController : ControllerBase
     {
-        //dependency injection
         private readonly IConfiguration _configuration;
-       public PartsController(IConfiguration configuration)
+        public PartsController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -30,7 +29,7 @@ namespace ERPSystem.Controllers
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("ERPSysConn");
             MySqlDataReader myReader;
-            using(MySqlConnection myConn = new MySqlConnection(sqlDataSource))
+            using (MySqlConnection myConn = new MySqlConnection(sqlDataSource))
             {
                 myConn.Open();
                 using (MySqlCommand myCommand = new MySqlCommand(query, myConn))
