@@ -40,3 +40,9 @@ The main goal of this project is to tackle a common data manipulation challenge 
 - Document the code comprehensively, providing comments for clarity.
 - Test the solution with various scenarios to validate its robustness.
 - Consider scalability and maintainability in the code implementation.
+
+### Screenshots:
+![Data_fetch2](https://github.com/GM-Frost/ERP-System-TreeView/assets/110303752/a55fdd2f-17f4-4dd4-887d-90ead592ae73)
+![after_database_connection](https://github.com/GM-Frost/ERP-System-TreeView/assets/110303752/b6e5a5fa-2d16-4b08-8e94-2c623b8f11fc)
+
+
